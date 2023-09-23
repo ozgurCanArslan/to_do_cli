@@ -1,21 +1,11 @@
 import typer
 from rich.console import Console
 from rich.table import Table
-from core.model import Todo
-from core.database import (
-    get_all_todos,
-    get_todos_category,
-    delete_todo,
-    insert_todo,
-    complete_todo,
-    update_todo,
-)
-from core.functions import (
-    load_json,
-    check_colors,
-    update_categories,
-)
 
+from core.database import (complete_todo, delete_todo, get_all_todos,
+                           get_todos_category, insert_todo, update_todo)
+from core.functions import check_colors, load_json, update_categories
+from core.model import Todo
 
 CATEGORIES = load_json()
 
@@ -81,7 +71,7 @@ def update(position: int, task: str = None, category: str = None):
     show()
 
 
-@app.command()
+@app.command(short_help="update category name or color")
 def update_category(category: str, new_category: str = None, color: str = None):
     typer.echo(f"updating {category}")
     update_categories(
@@ -90,14 +80,14 @@ def update_category(category: str, new_category: str = None, color: str = None):
     show()
 
 
-@app.command()
+@app.command(short_help="complete the task with task number")
 def complete(position: int):
     typer.echo(f"complete {position}")
     complete_todo(position - 1)
     show()
 
 
-@app.command()
+@app.command(short_help="show the To-Do")
 def show():
     typer.echo(f"Categories: {CATEGORIES}")
     tasks = get_all_todos()
@@ -131,7 +121,7 @@ def show():
     console.print(table)
 
 
-@app.command()
+@app.command(short_help="show the Categories")
 def show_category(category: str):
     typer.echo(f"Categories: {CATEGORIES}")
     if category == "all":
