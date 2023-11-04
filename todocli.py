@@ -2,8 +2,14 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from core.database import (complete_todo, delete_todo, get_all_todos,
-                           get_todos_category, insert_todo, update_todo)
+from core.database import (
+    complete_todo,
+    delete_todo,
+    get_all_todos,
+    get_todos_category,
+    insert_todo,
+    update_todo,
+)
 from core.functions import check_colors, load_json, update_categories
 from core.model import Todo
 
@@ -59,7 +65,7 @@ def delete(position: int):
 
 
 @app.command(short_help="delete a category")
-def del_category(category: int):
+def del_category(category: str):
     typer.echo(f"deleting {category}")
     update_categories(method="del", field=category)
 
